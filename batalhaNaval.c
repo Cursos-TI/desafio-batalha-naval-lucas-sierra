@@ -2,78 +2,87 @@
 
 int main() {
 
-    // -----------------------------------------------------
-    // TABULEIRO 10x10 INICIALIZADO COM ÁGUA (0)
-    // -----------------------------------------------------
+    // -------------------------
+    // 1. CRIAÇÃO DO TABULEIRO
+    // -------------------------
+
     int tabuleiro[10][10];
 
-    // Preenche toda a matriz com 0 (água)
+    // Inicializa todas as posições com 0 (água)
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             tabuleiro[i][j] = 0;
         }
     }
 
-    // -----------------------------------------------------
-    // NAVIOS DE TAMANHO FIXO = 3
-    // Representados por vetores unidimensionais
-    // Valor 3 representa parte do navio
-    // -----------------------------------------------------
-    int navioHorizontal[3] = {3, 3, 3};
-    int navioVertical[3]   = {3, 3, 3};
+    // -------------------------
+    // 2. POSIÇÃO DOS 4 NAVIOS
+    // -------------------------
 
-    // -----------------------------------------------------
-    // COORDENADAS DOS NAVIOS (DEFINIDAS NO CÓDIGO)
-    // -----------------------------------------------------
-    int linhaH = 2;   // navio horizontal começa na linha 2
-    int colunaH = 4;  // e coluna 4
+    // Tamanho fixo dos navios
+    int tamanho = 3;
 
-    int linhaV = 5;   // navio vertical começa na linha 5
-    int colunaV = 1;  // e coluna 1
 
-    // -----------------------------------------------------
-    // VALIDAÇÃO BÁSICA — GARANTE QUE O NAVIO CABE NO TABULEIRO
-    // -----------------------------------------------------
-    if (colunaH + 3 > 10) {
-        printf("Erro: navio horizontal nao cabe no tabuleiro.\n");
-        return 0;
-    }
+    // -------------------------
+    // NAVIO 1 (HORIZONTAL)
+    // -------------------------
 
-    if (linhaV + 3 > 10) {
-        printf("Erro: navio vertical nao cabe no tabuleiro.\n");
-        return 0;
-    }
+    int n1_linha = 2;
+    int n1_coluna = 1;
 
-    // -----------------------------------------------------
-    // VALIDAÇÃO SIMPLES DE SOBREPOSIÇÃO
-    // -----------------------------------------------------
-    for (int i = 0; i < 3; i++) {
-        if (tabuleiro[linhaH][colunaH + i] == 3 ||
-            tabuleiro[linhaV + i][colunaV] == 3) {
-            printf("Erro: navios se sobrepoem.\n");
-            return 0;
+    // Validação simples
+    if (n1_coluna + tamanho <= 10) {
+        for (int i = 0; i < tamanho; i++) {
+            tabuleiro[n1_linha][n1_coluna + i] = 3;
         }
     }
 
-    // -----------------------------------------------------
-    // POSICIONA O NAVIO HORIZONTAL NO TABULEIRO
-    // Copiamos os valores do vetor para a matriz
-    // -----------------------------------------------------
-    for (int i = 0; i < 3; i++) {
-        tabuleiro[linhaH][colunaH + i] = navioHorizontal[i];
+    // -------------------------
+    // NAVIO 2 (VERTICAL)
+    // -------------------------
+
+    int n2_linha = 5;
+    int n2_coluna = 7;
+
+    if (n2_linha + tamanho <= 10) {
+        for (int i = 0; i < tamanho; i++) {
+            tabuleiro[n2_linha + i][n2_coluna] = 3;
+        }
     }
 
-    // -----------------------------------------------------
-    // POSICIONA O NAVIO VERTICAL NO TABULEIRO
-    // -----------------------------------------------------
-    for (int i = 0; i < 3; i++) {
-        tabuleiro[linhaV + i][colunaV] = navioVertical[i];
+    // -------------------------
+    // NAVIO 3 (DIAGONAL PRINCIPAL)
+    // (linha e coluna aumentam juntos)
+    // -------------------------
+
+    int n3_linha = 0;
+    int n3_coluna = 0;
+
+    if (n3_linha + tamanho <= 10 && n3_coluna + tamanho <= 10) {
+        for (int i = 0; i < tamanho; i++) {
+            tabuleiro[n3_linha + i][n3_coluna + i] = 3;
+        }
     }
 
-    // -----------------------------------------------------
-    // EXIBE O TABULEIRO COMPLETO
-    // -----------------------------------------------------
-    printf("\n=== TABULEIRO BATALHA NAVAL ===\n\n");
+    // -------------------------
+    // NAVIO 4 (DIAGONAL SECUNDÁRIA)
+    // (linha aumenta e coluna diminui)
+    // -------------------------
+
+    int n4_linha = 0;
+    int n4_coluna = 9;
+
+    if (n4_linha + tamanho <= 10 && n4_coluna - (tamanho - 1) >= 0) {
+        for (int i = 0; i < tamanho; i++) {
+            tabuleiro[n4_linha + i][n4_coluna - i] = 3;
+        }
+    }
+
+    // -------------------------
+    // 3. EXIBIR TABULEIRO
+    // -------------------------
+
+    printf("\nTABULEIRO 10x10:\n\n");
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
